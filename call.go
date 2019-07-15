@@ -13,7 +13,7 @@ type callInterface struct {
 	id     interface{}
 }
 
-func call(option callInterface, params ...[]interface{}) string {
+func call(option callInterface, params ...interface{}) string {
 
 	reqBodyMap := map[string]interface{}{"jsonrpc": "2.0", "method": option.method, "params": params, "id": option.id}
 	reqBodyJSON, _ := json.Marshal(reqBodyMap)

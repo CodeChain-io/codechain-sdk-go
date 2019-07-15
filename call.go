@@ -8,9 +8,9 @@ import (
 )
 
 type callInterface struct {
-	node   string      //`json:"node"`
-	method string      //`json:"method"`
-	id     interface{} //`json:"id"`
+	node   string
+	method string
+	id     interface{}
 }
 
 func call(option callInterface, params ...[]interface{}) string {

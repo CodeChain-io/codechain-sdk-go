@@ -3,6 +3,7 @@ package rpc
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -14,6 +15,13 @@ type callInterface struct {
 }
 
 func call(option callInterface, params ...interface{}) string {
+
+	defer func() {
+		s := recover()
+		if s != nil {
+			fmt.Println(s)
+		}
+	}()
 
 	reqBodyMap := map[string]interface{}{"jsonrpc": "2.0", "method": option.method, "params": params, "id": option.id}
 	reqBodyJSON, _ := json.Marshal(reqBodyMap)

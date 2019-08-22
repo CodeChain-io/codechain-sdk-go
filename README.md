@@ -18,7 +18,8 @@ import (
 	rpc "github.com/codechain-io/codechain-rpc-go"
 )
 func main() {
-	fmt.Println(codechainrpc.Ping(nil))
+	rpc.Init("https://corgi-rpc.codechain.io/")
+	fmt.Println(rpc.Version())
 }
 
 ```

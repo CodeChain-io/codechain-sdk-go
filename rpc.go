@@ -1,7 +1,19 @@
 package rpc
 
-func Ping(params interface{}, id ...interface{}) string {
+// NewRPC is a constructor of RPC
+func Init(node string) {
+	newRPCClient(node, nil)
+}
+
+// Ping sends request to node
+func Ping() {
 	const method = "ping"
-	return call(callInterface{node: "https://corgi-rpc.codechain.io/", method: method, id: id})
-	// TODO: Use node uri from environment
+	call(callInterface{method: method, id: ""})
+}
+
+// Version checking
+func Version() string {
+	const method = "version"
+	result := call(callInterface{method: method, id: ""}).Result.(string)
+	return result
 }

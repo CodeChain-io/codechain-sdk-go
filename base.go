@@ -55,7 +55,7 @@ func (client *rpcClient) call(option callInterface, params ...interface{}) Resul
 		}
 	}()
 
-	reqBodyMap := map[string]interface{}{"jsonrpc": "2.0", "method": option.method, "params": params, "id": ""}
+	reqBodyMap := map[string]interface{}{"jsonrpc": "2.0", "method": option.method, "params": params, "id": client.idGenerator()}
 	reqBodyJSON, _ := json.Marshal(reqBodyMap)
 	reqBody := bytes.NewBuffer(reqBodyJSON)
 	req, err := http.NewRequest("POST", client.rpcURL, reqBody)

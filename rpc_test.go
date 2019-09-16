@@ -6,7 +6,7 @@ import (
 )
 
 func TestRPC(t *testing.T) {
-	Init("https://corgi-rpc.codechain.io/")
-	Ping()
-	fmt.Println(Version())
+	rpc := NewRPC("https://corgi-rpc.codechain.io/")
+	rpc.Ping()
+	fmt.Println(rpc.Version())
 }

@@ -8,12 +8,6 @@ import (
 	"net/http"
 )
 
-var (
-	node        string
-	idGenerator func(string) string
-	client      http.Client
-)
-
 // Result of RPC
 type Result struct {
 	Jsonrpc string      `json:"jsonrpc,omitempty"`
@@ -26,20 +20,25 @@ type callInterface struct {
 	id     string
 }
 
-func newRPCClient(nodeURL string, idGen func(string) string) {
-	node = nodeURL
-	idGenerator = idGen
-	client = http.Client{}
+type rpcClient struct {
+	rpcURL      string
+	idGenerator func(string) string
+	httpClient  http.Client
 }
 
-func id(option callInterface) interface{} {
-	if idGenerator != nil {
-		return idGenerator(option.method)
+func newRPCClient(nodeURL string, idGen func(string) string) rpcClient {
+	client := http.Client{}
+	return rpcClient{nodeURL, idGen, client}
+}
+
+func (client *rpcClient) id(option callInterface) interface{} {
+	if client.idGenerator != nil {
+		return client.idGenerator(option.method)
 	}
 	return nil
 }
 
-func call(option callInterface, params ...interface{}) Result {
+func (client *rpcClient) call(option callInterface, params ...interface{}) Result {
 
 	defer func() {
 		s := recover()
@@ -51,11 +50,11 @@ func call(option callInterface, params ...interface{}) Result {
 	reqBodyMap := map[string]interface{}{"jsonrpc": "2.0", "method": option.method, "params": params, "id": ""}
 	reqBodyJSON, _ := json.Marshal(reqBodyMap)
 	reqBody := bytes.NewBuffer(reqBodyJSON)
-	req, err := http.NewRequest("POST", node, reqBody)
+	req, err := http.NewRequest("POST", client.rpcURL, reqBody)
 
 	req.Header.Set("Content-Type", "application/json")
 
-	resp, err := client.Do(req)
+	resp, err := client.httpClient.Do(req)
 	if err != nil {
 		panic(err)
 	}

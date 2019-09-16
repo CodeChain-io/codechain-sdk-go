@@ -6,7 +6,7 @@ import (
 )
 
 func TestHaHa(t *testing.T) {
-	Init("https://corgi-rpc.codechain.io/")
-	getList()
-	fmt.Println(create("asdfasdf"))
+	account := NewRPC("https://corgi-rpc.codechain.io/").account
+	account.GetList()
+	fmt.Println(account.Create("asdfasdf"))
 }

@@ -1,19 +1,31 @@
 package rpc
 
+// RPC object
+type RPC struct {
+	rpcClient rpcClient
+	account   Account
+	chain     Chain
+}
+
 // NewRPC is a constructor of RPC
-func Init(node string) {
-	newRPCClient(node, nil)
+func NewRPC(nodeURL string) RPC {
+	rpcClient := newRPCClient(nodeURL, nil)
+	return RPC{
+		rpcClient: rpcClient,
+		account:   Account{rpcClient},
+		chain:     Chain{rpcClient},
+	}
 }
 
 // Ping sends request to node
-func Ping() {
+func (rpc *RPC) Ping() {
 	const method = "ping"
-	call(callInterface{method: method, id: ""})
+	rpc.rpcClient.call(callInterface{method: method, id: ""})
 }
 
 // Version checking
-func Version() string {
+func (rpc *RPC) Version() string {
 	const method = "version"
-	result := call(callInterface{method: method, id: ""}).Result.(string)
+	result := rpc.rpcClient.call(callInterface{method: method, id: ""}).Result.(string)
 	return result
 }

@@ -7,42 +7,46 @@ type UnsingnedTransaction struct {
 	action    interface{}
 }
 
-func GetList() []string {
+type Account struct {
+	rpcClient rpcClient
+}
+
+func (acc *Account) GetList() []string {
 	const method = "account_getList"
-	response := call(callInterface{method: method, id: ""})
+	response := acc.rpcClient.call(callInterface{method: method, id: ""})
 	return response.Result.([]string)
 }
 
-func Create(passphrase string) interface{} {
+func (acc *Account) Create(passphrase string) interface{} {
 	const method = "account_create"
-	response := call(callInterface{method: method}, passphrase)
+	response := acc.rpcClient.call(callInterface{method: method}, passphrase)
 	return response.Result
 }
 
-func ImportRaw(secret string, passphrase string) string {
+func (acc *Account) ImportRaw(secret string, passphrase string) string {
 	const method = "account_importRaw"
-	response := call(callInterface{method: method}, secret, passphrase)
+	response := acc.rpcClient.call(callInterface{method: method}, secret, passphrase)
 	return response.Result.(string)
 }
 
-func Unlock(account string, passphrase string, duration int) {
+func (acc *Account) Unlock(account string, passphrase string, duration int) {
 	const method = "account_unlock"
-	call(callInterface{method: method}, account, passphrase, duration)
+	acc.rpcClient.call(callInterface{method: method}, account, passphrase, duration)
 }
 
-func sign(message string, account string, passphrase string) string {
+func (acc *Account) sign(message string, account string, passphrase string) string {
 	const method = "account_sign"
-	response := call(callInterface{method: method}, message, account, passphrase)
+	response := acc.rpcClient.call(callInterface{method: method}, message, account, passphrase)
 	return response.Result.(string)
 }
 
-func sendTransaction(transaction UnsingnedTransaction, account string, passphrase string) interface{} {
+func (acc *Account) sendTransaction(transaction UnsingnedTransaction, account string, passphrase string) interface{} {
 	const method = "account_sendTransaction"
-	response := call(callInterface{method: method}, transaction, account, passphrase)
+	response := acc.rpcClient.call(callInterface{method: method}, transaction, account, passphrase)
 	return response.Result
 }
 
-func changePassword(account string, oldPassphrase string, newPassphrase string) {
+func (acc *Account) changePassword(account string, oldPassphrase string, newPassphrase string) {
 	const method = "account_changePassword"
-	call(callInterface{method: method}, account, oldPassphrase, newPassphrase)
+	acc.rpcClient.call(callInterface{method: method}, account, oldPassphrase, newPassphrase)
 }

@@ -22,18 +22,18 @@ type callInterface struct {
 
 type rpcClient struct {
 	rpcURL      string
-	idGenerator func(string) string
+	idGenerator func() string
 	httpClient  http.Client
 }
 
-func newRPCClient(nodeURL string, idGen func(string) string) rpcClient {
+func newRPCClient(nodeURL string, idGen func() string) rpcClient {
 	client := http.Client{}
 	return rpcClient{nodeURL, idGen, client}
 }
 
 func (client *rpcClient) id(option callInterface) interface{} {
 	if client.idGenerator != nil {
-		return client.idGenerator(option.method)
+		return client.idGenerator()
 	}
 	return nil
 }

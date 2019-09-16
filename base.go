@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
 // Result of RPC
@@ -28,6 +29,13 @@ type rpcClient struct {
 
 func newRPCClient(nodeURL string, idGen func() string) rpcClient {
 	client := http.Client{}
+	if idGen == nil {
+		i := 0
+		idGen = func() string {
+			i++
+			return strconv.Itoa(i)
+		}
+	}
 	return rpcClient{nodeURL, idGen, client}
 }
 

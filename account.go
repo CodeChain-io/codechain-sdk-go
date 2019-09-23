@@ -1,12 +1,5 @@
 package rpc
 
-type UnsingnedTransaction struct {
-	fee       int
-	networkId string
-	seq       int
-	action    interface{}
-}
-
 type Account struct {
 	rpcClient rpcClient
 }
@@ -40,7 +33,7 @@ func (acc *Account) sign(message string, account string, passphrase string) stri
 	return response.Result.(string)
 }
 
-func (acc *Account) sendTransaction(transaction UnsingnedTransaction, account string, passphrase string) interface{} {
+func (acc *Account) sendTransaction(transaction UnsignedTransaction, account string, passphrase string) interface{} {
 	const method = "account_sendTransaction"
 	response := acc.rpcClient.call(callInterface{method: method}, transaction, account, passphrase)
 	return response.Result

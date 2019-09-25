@@ -1,5 +1,9 @@
 package rpc
 
+import (
+	"encoding/json"
+)
+
 type Chain struct {
 	rpcClient rpcClient
 }
@@ -22,10 +26,13 @@ func (c *Chain) GetBlockHash(blockNumber int) string {
 	return response.Result.(string)
 }
 
-func (c *Chain) GetBlockByNumber(blockNumber int) interface{} {
+func (c *Chain) GetBlockByNumber(blockNumber int) Block {
 	const method = "chain_getBlockByNumber"
 	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockNumber)
-	return response.Result
+	var block Block
+	res, _ := json.Marshal(response.Result)
+	json.Unmarshal(res, &block)
+	return block
 }
 
 func (c *Chain) GetBlockByHash(blockHash string) interface{} {

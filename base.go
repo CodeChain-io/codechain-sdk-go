@@ -11,9 +11,9 @@ import (
 
 // Result of RPC
 type Result struct {
-	Jsonrpc string      `json:"jsonrpc,omitempty"`
-	Result  interface{} `json:"result,omitempty"`
-	ID      string      `json:"id,omitempty"`
+	Jsonrpc string          `json:"jsonrpc,omitempty"`
+	Result  json.RawMessage `json:"result,omitempty"`
+	ID      interface{}     `json:"id,omitempty"`
 }
 
 type callInterface struct {
@@ -46,8 +46,7 @@ func (client *rpcClient) id(option callInterface) interface{} {
 	return nil
 }
 
-func (client *rpcClient) call(option callInterface, params ...interface{}) Result {
-
+func (client *rpcClient) call(option callInterface, result interface{}, params ...interface{}) {
 	defer func() {
 		s := recover()
 		if s != nil {
@@ -72,9 +71,14 @@ func (client *rpcClient) call(option callInterface, params ...interface{}) Resul
 	if readerr != nil {
 		panic(readerr)
 	}
-	var res Result
-	json.Unmarshal(body, &res)
-	return res
+	var outerResult Result
+	if err := json.Unmarshal(body, &outerResult); err != nil {
+		panic(err)
+	}
+
+	if err := json.Unmarshal(outerResult.Result, &result); err != nil {
+		panic(err)
+	}
 
 	// TODO: handle errors
 }

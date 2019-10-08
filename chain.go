@@ -1,205 +1,230 @@
 package rpc
 
-import (
-	"encoding/json"
-)
-
 type Chain struct {
 	rpcClient rpcClient
 }
 
 func (c *Chain) GetBestBlockNumber() int {
 	const method = "chain_getBestBlockNumber"
-	response := c.rpcClient.call(callInterface{method: method, id: ""})
-	return response.Result.(int)
+	var blockNumber int
+	c.rpcClient.call(callInterface{method: method, id: ""}, &blockNumber)
+	return blockNumber
 }
 
-func (c *Chain) GetBestBlockId() string {
+func (c *Chain) GetBestBlockId() interface{} {
 	const method = "chain_getBestBlockId"
-	response := c.rpcClient.call(callInterface{method: method, id: ""})
-	return response.Result.(string)
+	var blockId interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &blockId)
+	return blockId
 }
 
 func (c *Chain) GetBlockHash(blockNumber int) string {
 	const method = "chain_getBlockHash"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockNumber)
-	return response.Result.(string)
+	var blockHash string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &blockHash, blockNumber)
+	return blockHash
 }
 
 func (c *Chain) GetBlockByNumber(blockNumber int) Block {
 	const method = "chain_getBlockByNumber"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockNumber)
 	var block Block
-	res, _ := json.Marshal(response.Result)
-	json.Unmarshal(res, &block)
+	c.rpcClient.call(callInterface{method: method, id: ""}, &block, blockNumber)
 	return block
 }
 
 func (c *Chain) GetBlockByHash(blockHash string) interface{} {
 	const method = "chain_getBlockByHash"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockHash)
-	return response.Result
+	var block Block
+	c.rpcClient.call(callInterface{method: method, id: ""}, &block, blockHash)
+	return block
 }
 
 func (c *Chain) GetBlockTransactionCountByHash(blockHash string) int {
 	const method = "chain_getBlockTransactionCountByHash"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockHash)
-	return response.Result.(int)
+	var count int
+	c.rpcClient.call(callInterface{method: method, id: ""}, &count, blockHash)
+	return count
 }
 
 func (c *Chain) GetTransaction(transactionHash string) interface{} {
 	const method = "chain_getTransaction"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, transactionHash)
-	return response.Result
+	var transaction interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &transaction, transactionHash)
+	return transaction
 }
 
 func (c *Chain) GetTransactionSigner(transactionHash string) string {
 	const method = "chain_getTransactionSigner"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, transactionHash)
-	return response.Result.(string)
+	var platformAddress string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &platformAddress, transactionHash)
+	return platformAddress
 }
 
 func (c *Chain) ContainsTransaction(transactionHash string) bool {
 	const method = "chain_containsTransaction"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, transactionHash)
-	return response.Result.(bool)
+	var contains bool
+	c.rpcClient.call(callInterface{method: method, id: ""}, &contains, transactionHash)
+	return contains
 }
 
 func (c *Chain) GetTransactionByTracker(tracker string) interface{} {
 	const method = "chain_getTransactionByTracker"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, tracker)
-	return response.Result
+	var transaction interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &transaction, tracker)
+	return transaction
 }
 
 func (c *Chain) GetAssetSchemeByTracker(tracker string) interface{} {
 	const method = "chain_getAssetSchemeByTracker"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, tracker)
-	return response.Result
+	var asset interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &asset, tracker)
+	return asset
 }
 
 func (c *Chain) GetAssetSchemeByType(assetType string) interface{} {
 	const method = "chain_getAssetSchemeByType"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, assetType)
-	return response.Result
+	var assetScheme interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &assetScheme, assetType)
+	return assetScheme
 }
 
 func (c *Chain) GetAsset(tracker string, transactionIndex int, shardId int, blockNumber int) interface{} {
 	const method = "chain_getAsset"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, tracker, transactionIndex, shardId, blockNumber)
-	return response.Result
+	var asset interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &asset, tracker, transactionIndex, shardId, blockNumber)
+	return asset
 }
 
 func (c *Chain) GetText(transactionHash string, blockNumber int) interface{} {
 	const method = "chain_getText"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, transactionHash, blockNumber)
-	return response.Result
+	var text string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &text, transactionHash, blockNumber)
+	return text
 }
 
 func (c *Chain) IsAssetSpent(tracker string, transactionIndex int, shardId int, blockNumber int) interface{} {
 	const method = "chain_isAssetSpent"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, tracker, transactionIndex, shardId, blockNumber)
-	return response.Result
+	var spent bool
+	c.rpcClient.call(callInterface{method: method, id: ""}, &spent, tracker, transactionIndex, shardId, blockNumber)
+	return spent
 }
 
 func (c *Chain) GetSeq(address string, blockNumber int) int {
 	const method = "chain_getSeq"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, address, blockNumber)
-	return response.Result.(int)
+	var seq int
+	c.rpcClient.call(callInterface{method: method, id: ""}, &seq, address, blockNumber)
+	return seq
 }
 
 func (c *Chain) GetBalance(address string, blockNumber int) int {
 	const method = "chain_getBalance"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, address, blockNumber)
-	return response.Result.(int)
+	var balance int
+	c.rpcClient.call(callInterface{method: method, id: ""}, &balance, address, blockNumber)
+	return balance
 }
 
 func (c *Chain) GetRegularKey(address string, blockNumber int) string {
 	const method = "chain_getRegularKey"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, address, blockNumber)
-	return response.Result.(string)
+	var key string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &key, address, blockNumber)
+	return key
 }
 
 func (c *Chain) GetRegularKeyOwner(publicKey string, blockNumber int) string {
-	const method = "chain_getRegularKey"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, publicKey, blockNumber)
-	return response.Result.(string)
+	const method = "chain_getRegularKeyOwner"
+	var platformAddress string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &platformAddress, publicKey, blockNumber)
+	return platformAddress
 }
 
 func (c *Chain) GetGenesisAccounts() []interface{} {
 	const method = "chain_getGenesisAccounts"
-	response := c.rpcClient.call(callInterface{method: method, id: ""})
-	return response.Result.([]interface{})
+	var accounts []interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &accounts)
+	return accounts
 }
 
 func (c *Chain) GetNumberOfShards(blockNumber int) float64 {
 	const method = "chain_getNumberOfShards"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockNumber)
-	return response.Result.(float64)
+	var num float64
+	c.rpcClient.call(callInterface{method: method, id: ""}, &num, blockNumber)
+	return num
 }
 
 func (c *Chain) GetShardIdByHash(transactionHash string, blockNumber int) int {
 	const method = "chain_getShardIdByHash"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, transactionHash, blockNumber)
-	return response.Result.(int)
+	var shardID int
+	c.rpcClient.call(callInterface{method: method, id: ""}, &shardID, transactionHash, blockNumber)
+	return shardID
 }
 
 func (c *Chain) GetShardRoot(shardId int, blockNumber int) string {
 	const method = "chain_getShardRoot"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, shardId, blockNumber)
-	return response.Result.(string)
+	var shardRoot string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &shardRoot, shardId, blockNumber)
+	return shardRoot
 }
 
 func (c *Chain) GetShardOwners(shardId int, blockNumber int) []string {
 	const method = "chain_getShardOwners"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, shardId, blockNumber)
-	return response.Result.([]string)
+	var owners []string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &owners, shardId, blockNumber)
+	return owners
 }
 
 func (c *Chain) GetShardUsers(shardId int, blockNumber int) []string {
 	const method = "chain_getShardUsers"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, shardId, blockNumber)
-	return response.Result.([]string)
+	var users []string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &users, shardId, blockNumber)
+	return users
 
 }
 
 func (c *Chain) GetMiningReward(blockNumber int) int {
 	const method = "chain_getMiningReward"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockNumber)
-	return response.Result.(int)
+	var reward int
+	c.rpcClient.call(callInterface{method: method, id: ""}, &reward, blockNumber)
+	return reward
 }
 
 func (c *Chain) GetMinTransactionFee(transactionType string, blockNumber int) int {
 	const method = "chain_getMinTransactionFee"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, transactionType, blockNumber)
-	return response.Result.(int)
+	var minFee int
+	c.rpcClient.call(callInterface{method: method, id: ""}, &minFee, transactionType, blockNumber)
+	return minFee
 }
 
 func (c *Chain) GetCommonParams(blockNumber int) interface{} {
 	const method = "chain_getCommonParamss"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockNumber)
-	return response.Result
+	var commonParams interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &commonParams, blockNumber)
+	return commonParams
 }
 
 func (c *Chain) GetTermMetadata(blockNumber int) interface{} {
 	const method = "chain_getTermMetadata"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, blockNumber)
-	return response.Result
+	var metadata interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &metadata, blockNumber)
+	return metadata
 }
 
 func (c *Chain) ExecuteTransaction(transaction interface{}, sender string) string {
-	const method = "chain_getTermMetadata"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, transaction, sender)
-	return response.Result.(string)
+	const method = "chain_executeTransaction"
+	var result string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &result, transaction, sender)
+	return result
 }
 
 func (c *Chain) ExecuteVM(transaction interface{}, parameters [][][]int, indices int) []string {
 	const method = "chain_executeVM"
-	response := c.rpcClient.call(callInterface{method: method, id: ""}, transaction, parameters, indices)
-	return response.Result.([]string)
+	var result []string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &result, transaction, parameters, indices)
+	return result
 }
 
 func (c *Chain) GetNetworkId() string {
 	const method = "chain_getNetworkId"
-	response := c.rpcClient.call(callInterface{method: method, id: ""})
-	return response.Result.(string)
+	var networkID string
+	c.rpcClient.call(callInterface{method: method, id: ""}, &networkID)
+	return networkID
 }

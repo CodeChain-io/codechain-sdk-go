@@ -26,7 +26,7 @@ type Block struct {
 	Hash             string        `json:"hash"`
 	Number           int           `json:"number"`
 	ParentHash       string        `json:"parentHash"`
-	Score            int           `json:"score"`
+	Score            string        `json:"score"`
 	Seal             [][]int       `json:"seal"`
 	StateRoot        string        `json:"stateRoot"`
 	Timestamp        int           `json:"timestamp"`

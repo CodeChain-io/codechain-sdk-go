@@ -20,12 +20,13 @@ func NewRPC(nodeURL string) RPC {
 // Ping sends request to node
 func (rpc *RPC) Ping() {
 	const method = "ping"
-	rpc.rpcClient.call(callInterface{method: method, id: ""})
+	rpc.rpcClient.call(callInterface{method: method, id: ""}, nil)
 }
 
 // Version checking
 func (rpc *RPC) Version() string {
 	const method = "version"
-	result := rpc.rpcClient.call(callInterface{method: method, id: ""}).Result.(string)
-	return result
+	var version string
+	rpc.rpcClient.call(callInterface{method: method, id: ""}, &version)
+	return version
 }

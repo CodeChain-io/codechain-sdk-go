@@ -3,6 +3,7 @@ package crypto
 import (
 	"encoding/hex"
 	"golang.org/x/crypto/blake2b"
+	"golang.org/x/crypto/ripemd160"
 )
 
 func Blake256(data string) string {
@@ -62,5 +63,15 @@ func Blake160WithKey(data string, key []byte) string {
 	bs := b.Sum(nil)
 	var result []byte = make([]byte, 40)
 	hex.Encode(result, bs[:])
+	return string(result)
+}
+
+func Ripemd160(data string) string {
+	r := ripemd160.New()
+	s, _ := hex.DecodeString(data)
+	r.Write(s)
+	rs := r.Sum(nil)
+	var result []byte = make([]byte, 40)
+	hex.Encode(result, rs[:])
 	return string(result)
 }

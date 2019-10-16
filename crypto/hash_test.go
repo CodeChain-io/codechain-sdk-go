@@ -21,4 +21,9 @@ func TestBlake(t *testing.T) {
 	if r3 != "68e2afd80441be243c755c2184eb4c9ce9f9f17c" {
 		t.Fatal("Blake160WithKey function output error")
 	}
+
+	r4 := Ripemd160("abcdef12345678")
+	if r4 != "6b1f9162346b8962edde6e28ee7599541def053e" {
+		t.Fatal("Ripemd160 function error")
+	}
 }

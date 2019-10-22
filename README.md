@@ -5,7 +5,7 @@ CodeChain RPC Go is a Go library that calls RPC to a CodeChain node.
 ## How to install
 
 ```bash
-go get -u github.com/codechain-io/codechain-rpc-go
+go get -u github.com/CodeChain-io/codechain-rpc-go
 ```
 
 ## Example
@@ -15,7 +15,7 @@ package main
 
 import (
 	"fmt"
-	rpc "github.com/codechain-io/codechain-rpc-go"
+	rpc "github.com/CodeChain-io/codechain-rpc-go"
 )
 func main() {
 	rpc.Init("https://corgi-rpc.codechain.io/")

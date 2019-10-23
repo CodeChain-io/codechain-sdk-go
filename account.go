@@ -31,21 +31,21 @@ func (acc *Account) Unlock(account string, passphrase string, duration int) {
 	acc.rpcClient.call(callInterface{method: method}, nil, account, passphrase, duration)
 }
 
-func (acc *Account) sign(message string, account string, passphrase string) string {
+func (acc *Account) Sign(message string, account string, passphrase string) string {
 	const method = "account_sign"
 	var signature string
 	acc.rpcClient.call(callInterface{method: method}, &signature, message, account, passphrase)
 	return signature
 }
 
-func (acc *Account) sendTransaction(transaction UnsignedTransaction, account string, passphrase string) interface{} {
+func (acc *Account) SendTransaction(transaction UnsignedTransaction, account string, passphrase string) interface{} {
 	const method = "account_sendTransaction"
 	var result interface{}
 	acc.rpcClient.call(callInterface{method: method}, &result, transaction, account, passphrase)
 	return result
 }
 
-func (acc *Account) changePassword(account string, oldPassphrase string, newPassphrase string) {
+func (acc *Account) ChangePassword(account string, oldPassphrase string, newPassphrase string) {
 	const method = "account_changePassword"
 	acc.rpcClient.call(callInterface{method: method}, nil, account, oldPassphrase, newPassphrase)
 }

@@ -23,3 +23,5 @@ func main() {
 }
 
 ```
+
+clahub test

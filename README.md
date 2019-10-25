@@ -23,3 +23,19 @@ func main() {
 }
 
 ```
+
+## How to run linter
+
+Make sure you run `revive` before creating a PR to the repo
+
+### Install
+
+```sh
+go get -u github.com/mgechev/revive
+```
+
+### Run
+
+```sh
+revive -config revive.toml
+```

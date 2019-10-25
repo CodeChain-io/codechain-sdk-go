@@ -11,11 +11,11 @@ func (c *Chain) GetBestBlockNumber() int {
 	return blockNumber
 }
 
-func (c *Chain) GetBestBlockId() interface{} {
+func (c *Chain) GetBestBlockID() interface{} {
 	const method = "chain_getBestBlockId"
-	var blockId interface{}
-	c.rpcClient.call(callInterface{method: method, id: ""}, &blockId)
-	return blockId
+	var blockID interface{}
+	c.rpcClient.call(callInterface{method: method, id: ""}, &blockID)
+	return blockID
 }
 
 func (c *Chain) GetBlockHash(blockNumber int) string {
@@ -88,10 +88,10 @@ func (c *Chain) GetAssetSchemeByType(assetType string) interface{} {
 	return assetScheme
 }
 
-func (c *Chain) GetAsset(tracker string, transactionIndex int, shardId int, blockNumber int) interface{} {
+func (c *Chain) GetAsset(tracker string, transactionIndex int, shardID int, blockNumber int) interface{} {
 	const method = "chain_getAsset"
 	var asset interface{}
-	c.rpcClient.call(callInterface{method: method, id: ""}, &asset, tracker, transactionIndex, shardId, blockNumber)
+	c.rpcClient.call(callInterface{method: method, id: ""}, &asset, tracker, transactionIndex, shardID, blockNumber)
 	return asset
 }
 
@@ -102,10 +102,10 @@ func (c *Chain) GetText(transactionHash string, blockNumber int) interface{} {
 	return text
 }
 
-func (c *Chain) IsAssetSpent(tracker string, transactionIndex int, shardId int, blockNumber int) interface{} {
+func (c *Chain) IsAssetSpent(tracker string, transactionIndex int, shardID int, blockNumber int) interface{} {
 	const method = "chain_isAssetSpent"
 	var spent bool
-	c.rpcClient.call(callInterface{method: method, id: ""}, &spent, tracker, transactionIndex, shardId, blockNumber)
+	c.rpcClient.call(callInterface{method: method, id: ""}, &spent, tracker, transactionIndex, shardID, blockNumber)
 	return spent
 }
 
@@ -151,31 +151,31 @@ func (c *Chain) GetNumberOfShards(blockNumber int) float64 {
 	return num
 }
 
-func (c *Chain) GetShardIdByHash(transactionHash string, blockNumber int) int {
+func (c *Chain) GetShardIDByHash(transactionHash string, blockNumber int) int {
 	const method = "chain_getShardIdByHash"
 	var shardID int
 	c.rpcClient.call(callInterface{method: method, id: ""}, &shardID, transactionHash, blockNumber)
 	return shardID
 }
 
-func (c *Chain) GetShardRoot(shardId int, blockNumber int) string {
+func (c *Chain) GetShardRoot(shardID int, blockNumber int) string {
 	const method = "chain_getShardRoot"
 	var shardRoot string
-	c.rpcClient.call(callInterface{method: method, id: ""}, &shardRoot, shardId, blockNumber)
+	c.rpcClient.call(callInterface{method: method, id: ""}, &shardRoot, shardID, blockNumber)
 	return shardRoot
 }
 
-func (c *Chain) GetShardOwners(shardId int, blockNumber int) []string {
+func (c *Chain) GetShardOwners(shardID int, blockNumber int) []string {
 	const method = "chain_getShardOwners"
 	var owners []string
-	c.rpcClient.call(callInterface{method: method, id: ""}, &owners, shardId, blockNumber)
+	c.rpcClient.call(callInterface{method: method, id: ""}, &owners, shardID, blockNumber)
 	return owners
 }
 
-func (c *Chain) GetShardUsers(shardId int, blockNumber int) []string {
+func (c *Chain) GetShardUsers(shardID int, blockNumber int) []string {
 	const method = "chain_getShardUsers"
 	var users []string
-	c.rpcClient.call(callInterface{method: method, id: ""}, &users, shardId, blockNumber)
+	c.rpcClient.call(callInterface{method: method, id: ""}, &users, shardID, blockNumber)
 	return users
 
 }
@@ -222,7 +222,7 @@ func (c *Chain) ExecuteVM(transaction interface{}, parameters [][][]int, indices
 	return result
 }
 
-func (c *Chain) GetNetworkId() string {
+func (c *Chain) GetNetworkID() string {
 	const method = "chain_getNetworkId"
 	var networkID string
 	c.rpcClient.call(callInterface{method: method, id: ""}, &networkID)

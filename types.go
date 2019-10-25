@@ -2,7 +2,7 @@ package rpc
 
 type UnsignedTransaction struct {
 	fee       int
-	networkId string
+	networkID string
 	seq       int
 	action    interface{}
 }
@@ -15,7 +15,7 @@ type Transaction struct {
 	seq              int
 	fee              int
 	hash             string
-	networkId        string
+	networkID        string
 	sig              string
 	action           string
 } // TODO Handle action details

@@ -2,6 +2,7 @@ package primitives
 
 import (
 	"encoding/hex"
+
 	"github.com/ethereum/go-ethereum/rlp"
 )
 
@@ -36,7 +37,7 @@ func (h H128) RlpBytes() []byte {
 }
 
 func (h H128) ToJSON() string {
-	var test []byte = make([]byte, 32)
+	var test = make([]byte, 32)
 	innerArrOfH := [16]byte(h)
 	hex.Encode(test, innerArrOfH[:])
 	return "0x" + string(test)
@@ -61,7 +62,7 @@ func (h H160) RlpBytes() []byte {
 }
 
 func (h H160) ToJSON() string {
-	var test []byte = make([]byte, 40)
+	var test = make([]byte, 40)
 	innerArrOfH := [20]byte(h)
 	hex.Encode(test, innerArrOfH[:])
 	return "0x" + string(test)
@@ -86,7 +87,7 @@ func (h H256) RlpBytes() []byte {
 }
 
 func (h H256) ToJSON() string {
-	var test []byte = make([]byte, 64)
+	var test = make([]byte, 64)
 	innerArrOfH := [32]byte(h)
 	hex.Encode(test, innerArrOfH[:])
 	return "0x" + string(test)
@@ -111,7 +112,7 @@ func (h H512) RlpBytes() []byte {
 }
 
 func (h H512) ToJSON() string {
-	var test []byte = make([]byte, 128)
+	var test = make([]byte, 128)
 	innerArrOfH := [64]byte(h)
 	hex.Encode(test, innerArrOfH[:])
 	return "0x" + string(test)

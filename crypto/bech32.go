@@ -1,4 +1,4 @@
-// bech32 implementations are based on codechain-primitives-js
+// Package crypto bech32 implementations are based on codechain-primitives-js
 package crypto
 
 import (
@@ -7,7 +7,7 @@ import (
 
 const alphabet = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 
-func alphabet_map(c rune) int {
+func alphabetMap(c rune) int {
 	for k, v := range alphabet {
 		if c == v {
 			return k
@@ -70,7 +70,7 @@ func bech32Decode(str string, prefix string) (words []byte) {
 	var chk = prefixChk(prefix)
 	wordChars := str[len(prefix):]
 	for i, c := range wordChars {
-		v := alphabet_map(c)
+		v := alphabetMap(c)
 		chk = polymodeStep(chk) ^ int(v)
 
 		if i+6 >= len(wordChars) {

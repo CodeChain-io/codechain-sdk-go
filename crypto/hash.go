@@ -11,7 +11,7 @@ func Blake256(data string) string {
 	s, _ := hex.DecodeString(data)
 	b.Write(s)
 	bs := b.Sum(nil)
-	var result []byte = make([]byte, 64)
+	var result = make([]byte, 64)
 	hex.Encode(result, bs[:])
 	return string(result)
 }
@@ -21,7 +21,7 @@ func Blake256WithKey(data string, key []byte) string {
 	s, _ := hex.DecodeString(data)
 	b.Write(s)
 	bs := b.Sum(nil)
-	var result []byte = make([]byte, 64)
+	var result = make([]byte, 64)
 	hex.Encode(result, bs[:])
 	return string(result)
 }
@@ -31,7 +31,7 @@ func Blake128(data string) string {
 	s, _ := hex.DecodeString(data)
 	b.Write(s)
 	bs := b.Sum(nil)
-	var result []byte = make([]byte, 32)
+	var result = make([]byte, 32)
 	hex.Encode(result, bs[:])
 	return string(result)
 }
@@ -41,7 +41,7 @@ func Blake128WithKey(data string, key []byte) string {
 	s, _ := hex.DecodeString(data)
 	b.Write(s)
 	bs := b.Sum(nil)
-	var result []byte = make([]byte, 32)
+	var result = make([]byte, 32)
 	hex.Encode(result, bs[:])
 	return string(result)
 }
@@ -51,7 +51,7 @@ func Blake160(data string) string {
 	s, _ := hex.DecodeString(data)
 	b.Write(s)
 	bs := b.Sum(nil)
-	var result []byte = make([]byte, 40)
+	var result = make([]byte, 40)
 	hex.Encode(result, bs[:])
 	return string(result)
 }
@@ -61,7 +61,7 @@ func Blake160WithKey(data string, key []byte) string {
 	s, _ := hex.DecodeString(data)
 	b.Write(s)
 	bs := b.Sum(nil)
-	var result []byte = make([]byte, 40)
+	var result = make([]byte, 40)
 	hex.Encode(result, bs[:])
 	return string(result)
 }
@@ -71,7 +71,7 @@ func Ripemd160(data string) string {
 	s, _ := hex.DecodeString(data)
 	r.Write(s)
 	rs := r.Sum(nil)
-	var result []byte = make([]byte, 40)
+	var result = make([]byte, 40)
 	hex.Encode(result, rs[:])
 	return string(result)
 }

@@ -3,7 +3,6 @@ package rpc
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -46,39 +45,36 @@ func (client *rpcClient) id(option callInterface) interface{} {
 	return nil
 }
 
-func (client *rpcClient) call(option callInterface, result interface{}, params ...interface{}) {
-	defer func() {
-		s := recover()
-		if s != nil {
-			fmt.Println(s)
-		}
-	}()
+func (client *rpcClient) call(option callInterface, result interface{}, params ...interface{}) error {
 
 	reqBodyMap := map[string]interface{}{"jsonrpc": "2.0", "method": option.method, "params": params, "id": client.idGenerator()}
-	reqBodyJSON, _ := json.Marshal(reqBodyMap)
+	reqBodyJSON, err := json.Marshal(reqBodyMap)
+	if err != nil {
+		return err
+	}
+
 	reqBody := bytes.NewBuffer(reqBodyJSON)
 	req, err := http.NewRequest("POST", client.rpcURL, reqBody)
+	if err != nil {
+		return err
+	}
 
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.httpClient.Do(req)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer resp.Body.Close()
 
 	body, readerr := ioutil.ReadAll(resp.Body)
 	if readerr != nil {
-		panic(readerr)
+		return readerr
 	}
 	var outerResult Result
 	if err := json.Unmarshal(body, &outerResult); err != nil {
-		panic(err)
+		return err
 	}
 
-	if err := json.Unmarshal(outerResult.Result, &result); err != nil {
-		panic(err)
-	}
-
-	// TODO: handle errors
+	return json.Unmarshal(outerResult.Result, &result)
 }

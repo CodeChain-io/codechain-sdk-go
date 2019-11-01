@@ -1,5 +1,5 @@
-// Package crypto bech32 implementations are based on codechain-primitives-js
-package crypto
+// Package primitives bech32 implementations are based on codechain-primitives-js
+package primitives
 
 import (
 	"strings"

@@ -32,7 +32,7 @@ func (c *Chain) GetBlockByNumber(blockNumber int) (Block, error) {
 	return block, err
 }
 
-func (c *Chain) GetBlockByHash(blockHash string) (interface{}, error) {
+func (c *Chain) GetBlockByHash(blockHash string) (Block, error) {
 	const method = "chain_getBlockByHash"
 	var block Block
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &block, blockHash)
@@ -46,9 +46,9 @@ func (c *Chain) GetBlockTransactionCountByHash(blockHash string) (int, error) {
 	return count, err
 }
 
-func (c *Chain) GetTransaction(transactionHash string) (interface{}, error) {
+func (c *Chain) GetTransaction(transactionHash string) (Transaction, error) {
 	const method = "chain_getTransaction"
-	var transaction interface{}
+	var transaction Transaction
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &transaction, transactionHash)
 	return transaction, err
 }
@@ -67,42 +67,42 @@ func (c *Chain) ContainsTransaction(transactionHash string) (bool, error) {
 	return contains, err
 }
 
-func (c *Chain) GetTransactionByTracker(tracker string) (interface{}, error) {
+func (c *Chain) GetTransactionByTracker(tracker string) (Transaction, error) {
 	const method = "chain_getTransactionByTracker"
-	var transaction interface{}
+	var transaction Transaction
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &transaction, tracker)
 	return transaction, err
 }
 
-func (c *Chain) GetAssetSchemeByTracker(tracker string) (interface{}, error) {
+func (c *Chain) GetAssetSchemeByTracker(tracker string) (AssetScheme, error) {
 	const method = "chain_getAssetSchemeByTracker"
-	var asset interface{}
-	err := c.rpcClient.call(callInterface{method: method, id: ""}, &asset, tracker)
-	return asset, err
+	var assetScheme AssetScheme
+	err := c.rpcClient.call(callInterface{method: method, id: ""}, &assetScheme, tracker)
+	return assetScheme, err
 }
 
-func (c *Chain) GetAssetSchemeByType(assetType string) (interface{}, error) {
+func (c *Chain) GetAssetSchemeByType(assetType string) (AssetScheme, error) {
 	const method = "chain_getAssetSchemeByType"
-	var assetScheme interface{}
+	var assetScheme AssetScheme
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &assetScheme, assetType)
 	return assetScheme, err
 }
 
-func (c *Chain) GetAsset(tracker string, transactionIndex int, shardID int, blockNumber int) (interface{}, error) {
+func (c *Chain) GetAsset(tracker string, transactionIndex int, shardID int, blockNumber int) (Asset, error) {
 	const method = "chain_getAsset"
-	var asset interface{}
+	var asset Asset
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &asset, tracker, transactionIndex, shardID, blockNumber)
 	return asset, err
 }
 
-func (c *Chain) GetText(transactionHash string, blockNumber int) (interface{}, error) {
+func (c *Chain) GetText(transactionHash string, blockNumber int) (Text, error) {
 	const method = "chain_getText"
-	var text string
+	var text Text
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &text, transactionHash, blockNumber)
 	return text, err
 }
 
-func (c *Chain) IsAssetSpent(tracker string, transactionIndex int, shardID int, blockNumber int) (interface{}, error) {
+func (c *Chain) IsAssetSpent(tracker string, transactionIndex int, shardID int, blockNumber int) (bool, error) {
 	const method = "chain_isAssetSpent"
 	var spent bool
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &spent, tracker, transactionIndex, shardID, blockNumber)
@@ -137,9 +137,9 @@ func (c *Chain) GetRegularKeyOwner(publicKey string, blockNumber int) (string, e
 	return platformAddress, err
 }
 
-func (c *Chain) GetGenesisAccounts() ([]interface{}, error) {
+func (c *Chain) GetGenesisAccounts() ([]string, error) {
 	const method = "chain_getGenesisAccounts"
-	var accounts []interface{}
+	var accounts []string
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &accounts)
 	return accounts, err
 }
@@ -194,28 +194,28 @@ func (c *Chain) GetMinTransactionFee(transactionType string, blockNumber int) (i
 	return minFee, err
 }
 
-func (c *Chain) GetCommonParams(blockNumber int) (interface{}, error) {
+func (c *Chain) GetCommonParams(blockNumber int) (CommonParams, error) {
 	const method = "chain_getCommonParamss"
-	var commonParams interface{}
+	var commonParams CommonParams
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &commonParams, blockNumber)
 	return commonParams, err
 }
 
-func (c *Chain) GetTermMetadata(blockNumber int) (interface{}, error) {
+func (c *Chain) GetTermMetadata(blockNumber int) ([]int, error) {
 	const method = "chain_getTermMetadata"
-	var metadata interface{}
+	var metadata []int
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &metadata, blockNumber)
 	return metadata, err
 }
 
-func (c *Chain) ExecuteTransaction(transaction interface{}, sender string) (string, error) {
+func (c *Chain) ExecuteTransaction(transaction UnsignedTransaction, sender string) (string, error) {
 	const method = "chain_executeTransaction"
 	var result string
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &result, transaction, sender)
 	return result, err
 }
 
-func (c *Chain) ExecuteVM(transaction interface{}, parameters [][][]int, indices int) ([]string, error) {
+func (c *Chain) ExecuteVM(transaction UnsignedTransaction, parameters [][][]int, indices int) ([]string, error) {
 	const method = "chain_executeVM"
 	var result []string
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &result, transaction, parameters, indices)

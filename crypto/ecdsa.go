@@ -1,6 +1,8 @@
 package crypto
 
 import (
+	"crypto/elliptic"
+
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 )
 
@@ -17,4 +19,8 @@ func VerifyEcdsa(msg, signature, pubkey []byte) bool {
 func RecoverEcdsa(message, signature []byte) []byte {
 	result, _ := secp256k1.RecoverPubkey(message, signature)
 	return result
+}
+
+func S256() elliptic.Curve {
+	return secp256k1.S256()
 }

@@ -6,10 +6,10 @@ import (
 )
 
 func TestChain(t *testing.T) {
-	chain := NewRPC("https://corgi-rpc.codechain.io/").chain
+	chain := NewRPC("https://corgi-rpc.codechain.io/").Chain
 	res, err := chain.GetBlockByNumber(5)
 	if err != nil {
-		t.Fatal("TestChain failed")
+		t.Fatal("Chain test failed")
 	}
 	fmt.Println(res.Hash)
 }

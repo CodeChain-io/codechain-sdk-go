@@ -6,6 +6,6 @@ import (
 )
 
 func TestAccount(t *testing.T) {
-	account := NewRPC("https://corgi-rpc.codechain.io/").account
+	account := NewRPC("https://corgi-rpc.codechain.io/").Account
 	fmt.Println(account.Create("asdfasdf"))
 }

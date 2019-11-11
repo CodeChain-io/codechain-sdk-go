@@ -5,6 +5,10 @@ type RPC struct {
 	rpcClient rpcClient
 	account   Account
 	chain     Chain
+	devel     Devel
+	engine    Engine
+	mempool   Mempool
+	net       Net
 }
 
 // NewRPC is a constructor of RPC
@@ -14,7 +18,9 @@ func NewRPC(nodeURL string) RPC {
 		rpcClient: rpcClient,
 		account:   Account{rpcClient},
 		chain:     Chain{rpcClient},
-	}
+		devel:     Devel{rpcClient},
+		engine:    Engine{rpcClient},
+		mempool:   Mempool{rpcClient}}
 }
 
 // Ping sends request to node

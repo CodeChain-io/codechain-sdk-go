@@ -18,8 +18,10 @@ import (
 	rpc "github.com/CodeChain-io/codechain-rpc-go"
 )
 func main() {
-	rpc.Init("https://corgi-rpc.codechain.io/")
-	fmt.Println(rpc.Version())
+	a := rpc.NewRPC("https://corgi-rpc.codechain.io/").Chain
+	b, _ := a.GetBlockByNumber(0)
+
+	fmt.Printf("%+v\n", b)
 }
 
 ```

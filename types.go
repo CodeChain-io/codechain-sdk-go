@@ -1,10 +1,10 @@
 package rpc
 
 type UnsignedTransaction struct {
-	fee       int
-	networkID string
-	seq       int
-	action    Action
+	Fee       int    `json:"fee"`
+	NetworkID string `json:"network_id"`
+	Seq       int    `json:"seq"`
+	Action    Action `json:"action"`
 }
 
 type AssetScheme interface{}

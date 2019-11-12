@@ -85,16 +85,16 @@ type Custom struct {
 }
 
 type Transaction struct {
-	blockHash        string
-	blockNumber      int
-	transactionIndex int
-	result           bool
-	seq              int
-	fee              int
-	hash             string
-	networkID        string
-	sig              string
-	action           Action
+	BlockHash        string `json:"blockHash"`
+	BlockNumber      int    `json:"blockNumber"`
+	TransactionIndex int    `json:"transactionIndex"`
+	Result           bool   `json:"result"`
+	Seq              int    `json:"seq"`
+	Fee              string `json:"fee"`
+	Hash             string `json:"hash"`
+	NetworkID        string `json:"networkID"`
+	Sig              string `json:"sig"`
+	Action           Action `json:"action"`
 } // TODO Handle action details
 
 type Block struct {

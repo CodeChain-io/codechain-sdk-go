@@ -12,8 +12,8 @@ type Asset interface{}
 type CommonParams interface{}
 
 type Text struct {
-	content   string `json:"content"`
-	certifier string `json:"certifier"`
+	Content   string `json:"content"`
+	Certifier string `json:"certifier"`
 }
 
 type Action interface {

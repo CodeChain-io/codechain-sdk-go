@@ -1,6 +1,6 @@
-# CodeChain RPC Go
+# CodeChain SDK Go
 
-CodeChain RPC Go is a Go library that calls RPC to a CodeChain node.
+A Golang SDK for CodeChain
 
 ## How to install
 

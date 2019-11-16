@@ -1,77 +1,69 @@
 package crypto
 
 import (
-	"encoding/hex"
 	"golang.org/x/crypto/blake2b"
 	"golang.org/x/crypto/ripemd160"
 )
 
-func Blake256(data string) string {
+func Blake256(data []byte) ([]byte, error) {
 	b, _ := blake2b.New(32, nil)
-	s, _ := hex.DecodeString(data)
-	b.Write(s)
+	if _, err := b.Write(data); err != nil {
+		return nil, err
+	}
 	bs := b.Sum(nil)
-	var result = make([]byte, 64)
-	hex.Encode(result, bs[:])
-	return string(result)
+	return bs, nil
 }
 
-func Blake256WithKey(data string, key []byte) string {
+func Blake256WithKey(data []byte, key []byte) ([]byte, error) {
 	b, _ := blake2b.New(32, key)
-	s, _ := hex.DecodeString(data)
-	b.Write(s)
+	if _, err := b.Write(data); err != nil {
+		return nil, err
+	}
 	bs := b.Sum(nil)
-	var result = make([]byte, 64)
-	hex.Encode(result, bs[:])
-	return string(result)
+	return bs, nil
 }
 
-func Blake128(data string) string {
+func Blake128(data []byte) ([]byte, error) {
 	b, _ := blake2b.New(16, nil)
-	s, _ := hex.DecodeString(data)
-	b.Write(s)
+	if _, err := b.Write(data); err != nil {
+		return nil, err
+	}
 	bs := b.Sum(nil)
-	var result = make([]byte, 32)
-	hex.Encode(result, bs[:])
-	return string(result)
+	return bs, nil
 }
 
-func Blake128WithKey(data string, key []byte) string {
+func Blake128WithKey(data []byte, key []byte) ([]byte, error) {
 	b, _ := blake2b.New(16, key)
-	s, _ := hex.DecodeString(data)
-	b.Write(s)
+	if _, err := b.Write(data); err != nil {
+		return nil, err
+	}
 	bs := b.Sum(nil)
-	var result = make([]byte, 32)
-	hex.Encode(result, bs[:])
-	return string(result)
+	return bs, nil
 }
 
-func Blake160(data string) string {
+func Blake160(data []byte) ([]byte, error) {
 	b, _ := blake2b.New(20, nil)
-	s, _ := hex.DecodeString(data)
-	b.Write(s)
+	if _, err := b.Write(data); err != nil {
+		return nil, err
+	}
 	bs := b.Sum(nil)
-	var result = make([]byte, 40)
-	hex.Encode(result, bs[:])
-	return string(result)
+	return bs, nil
 }
 
-func Blake160WithKey(data string, key []byte) string {
+func Blake160WithKey(data []byte, key []byte) ([]byte, error) {
 	b, _ := blake2b.New(20, key)
-	s, _ := hex.DecodeString(data)
-	b.Write(s)
+	if _, err := b.Write(data); err != nil {
+		return nil, err
+	}
 	bs := b.Sum(nil)
-	var result = make([]byte, 40)
-	hex.Encode(result, bs[:])
-	return string(result)
+	return bs, nil
 }
 
-func Ripemd160(data string) string {
+func Ripemd160(data []byte) ([]byte, error) {
 	r := ripemd160.New()
-	s, _ := hex.DecodeString(data)
-	r.Write(s)
+	if _, err := r.Write(data); err != nil {
+		return nil, err
+	}
 	rs := r.Sum(nil)
-	var result = make([]byte, 40)
-	hex.Encode(result, rs[:])
-	return string(result)
+	return rs, nil
 }

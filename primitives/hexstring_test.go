@@ -17,4 +17,9 @@ func TestH128(t *testing.T) {
 	fmt.Println(a.ToString())
 	fmt.Println(a.RlpBytes())
 	fmt.Println(a.ToJSON())
+
+	z := "0x1010101010101010101010101010101010101010"
+	x, y := StringToH160(z)
+	fmt.Println(len(z))
+	fmt.Println(x, y)
 }

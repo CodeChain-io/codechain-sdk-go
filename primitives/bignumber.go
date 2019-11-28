@@ -26,6 +26,15 @@ func (u *U64) set(y big.Int) {
 	*u = U64(y)
 }
 
+func (u U64) Bytes() []byte {
+	b := big.Int(u)
+	return b.Bytes()
+}
+
+func (u U64) ToEncodeObject() []byte {
+	return u.Bytes()
+}
+
 func (u *U64) Add(x *U64, y *U64) *U64 {
 	// Handle larger than max
 	x1 := big.Int(*x)
@@ -186,11 +195,14 @@ func (u *U64) LTE(v *U64) (r int) {
 	return
 }
 
-func (u U64) toJSON() string {
+func (u U64) ToJSON() string {
 	u1 := big.Int(u)
 	innerArrOfU := u1.Bytes()
 	var test = make([]byte, 2*len(innerArrOfU))
 	hex.Encode(test, innerArrOfU[:])
+	if len(test) == 0 {
+		return "0x0"
+	}
 	return "0x" + string(test)
 }
 
@@ -207,6 +219,15 @@ func NewU128(v string) U128 {
 
 func (u *U128) set(y big.Int) {
 	*u = U128(y)
+}
+
+func (u U128) Bytes() []byte {
+	b := big.Int(u)
+	return b.Bytes()
+}
+
+func (u U128) ToEncodeObject() []byte {
+	return u.Bytes()
 }
 
 func (u *U128) Add(x *U128, y *U128) *U128 {
@@ -369,11 +390,14 @@ func (u *U128) LTE(v *U128) (r int) {
 	return
 }
 
-func (u U128) toJSON() string {
+func (u U128) ToJSON() string {
 	u1 := big.Int(u)
 	innerArrOfU := u1.Bytes()
 	var test = make([]byte, 2*len(innerArrOfU))
 	hex.Encode(test, innerArrOfU[:])
+	if len(test) == 0 {
+		return "0x0"
+	}
 	return "0x" + string(test)
 }
 
@@ -390,6 +414,15 @@ func NewU256(v string) U256 {
 
 func (u *U256) set(y big.Int) {
 	*u = U256(y)
+}
+
+func (u U256) Bytes() []byte {
+	b := big.Int(u)
+	return b.Bytes()
+}
+
+func (u U256) ToEncodeObject() []byte {
+	return u.Bytes()
 }
 
 func (u *U256) Add(x *U256, y *U256) *U256 {
@@ -552,10 +585,13 @@ func (u *U256) LTE(v *U256) (r int) {
 	return
 }
 
-func (u U256) toJSON() string {
+func (u U256) ToJSON() string {
 	u1 := big.Int(u)
 	innerArrOfU := u1.Bytes()
 	var test = make([]byte, 2*len(innerArrOfU))
 	hex.Encode(test, innerArrOfU[:])
+	if len(test) == 0 {
+		return "0x0"
+	}
 	return "0x" + string(test)
 }

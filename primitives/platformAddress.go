@@ -18,7 +18,7 @@ func PlatformAddressFromAccountID(accountID H160, networkID string) (p PlatformA
 		return
 	}
 
-	words := toWords([]byte("01" + accountID.ToString()))
+	words := toWords(append([]byte{1}, accountID.Bytes()...))
 	address := PlatformAddress{AccountID: accountID, Value: bech32Encode(networkID+"c", words)}
 
 	return address, nil

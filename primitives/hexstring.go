@@ -24,6 +24,12 @@ func NewH128Zero() H128 {
 	return zero
 }
 
+func NewH128(input []byte) H128 {
+	var res [16]byte
+	copy(res[:], input[:16])
+	return H128(res)
+}
+
 func StringToH128(s string) (H128, error) {
 
 	var res H128
@@ -46,12 +52,21 @@ func StringToH128(s string) (H128, error) {
 	return res, err
 }
 
+func (h H128) Bytes() []byte {
+	innerArray := ([16]byte(h))
+	return innerArray[:]
+}
+
 func (h H128) Cmp(g H128) bool {
 	return h == g
 }
 
 func (h H128) ToString() string {
 	return string(h[:])
+}
+
+func (h H128) ToHexString() string {
+	return hex.EncodeToString(h.Bytes())
 }
 
 func (h H128) RlpBytes() []byte {
@@ -66,6 +81,10 @@ func (h H128) ToJSON() string {
 	return "0x" + string(test)
 }
 
+func (h H128) ToEncodeObject() []byte {
+	return h.Bytes()
+}
+
 func NewH160Zero() H160 {
 	var zero H160 = [20]byte{}
 	return zero
@@ -78,8 +97,14 @@ func NewH160FromSlice(raw []byte) (h H160, err error) {
 	}
 	copy(h[:], raw)
 	return
-
 }
+
+func NewH160(input []byte) H160 {
+	var res [20]byte
+	copy(res[:], input[:20])
+	return H160(res)
+}
+
 func StringToH160(s string) (H160, error) {
 
 	var res H160
@@ -102,12 +127,21 @@ func StringToH160(s string) (H160, error) {
 	return res, err
 }
 
+func (h H160) Bytes() []byte {
+	innerArray := ([20]byte(h))
+	return innerArray[:]
+}
+
 func (h H160) Cmp(g H160) bool {
 	return h == g
 }
 
 func (h H160) ToString() string {
 	return string(h[:])
+}
+
+func (h H160) ToHexString() string {
+	return hex.EncodeToString(h.Bytes())
 }
 
 func (h H160) RlpBytes() []byte {
@@ -122,9 +156,19 @@ func (h H160) ToJSON() string {
 	return "0x" + string(test)
 }
 
+func (h H160) ToEncodeObject() []byte {
+	return h.Bytes()
+}
+
 func NewH256Zero() H256 {
 	var zero H256 = [32]byte{}
 	return zero
+}
+
+func NewH256(input []byte) H256 {
+	var res [32]byte
+	copy(res[:], input[:32])
+	return H256(res)
 }
 
 func StringToH256(s string) (H256, error) {
@@ -149,12 +193,21 @@ func StringToH256(s string) (H256, error) {
 	return res, err
 }
 
+func (h H256) Bytes() []byte {
+	innerArray := ([32]byte(h))
+	return innerArray[:]
+}
+
 func (h H256) Cmp(g H256) bool {
 	return h == g
 }
 
 func (h H256) ToString() string {
 	return string(h[:])
+}
+
+func (h H256) ToHexString() string {
+	return hex.EncodeToString(h.Bytes())
 }
 
 func (h H256) RlpBytes() []byte {
@@ -169,9 +222,19 @@ func (h H256) ToJSON() string {
 	return "0x" + string(test)
 }
 
+func (h H256) ToEncodeObject() []byte {
+	return h.Bytes()
+}
+
 func NewH512Zero() H512 {
 	var zero H512 = [64]byte{}
 	return zero
+}
+
+func NewH512(input []byte) H512 {
+	var res [64]byte
+	copy(res[:], input[:64])
+	return H512(res)
 }
 
 func StringToH512(s string) (H512, error) {
@@ -196,12 +259,21 @@ func StringToH512(s string) (H512, error) {
 	return res, err
 }
 
+func (h H512) Bytes() []byte {
+	innerArray := ([64]byte(h))
+	return innerArray[:]
+}
+
 func (h H512) Cmp(g H512) bool {
 	return h == g
 }
 
 func (h H512) ToString() string {
 	return string(h[:])
+}
+
+func (h H512) ToHexString() string {
+	return hex.EncodeToString(h.Bytes())
 }
 
 func (h H512) RlpBytes() []byte {
@@ -214,4 +286,8 @@ func (h H512) ToJSON() string {
 	innerArrOfH := [64]byte(h)
 	hex.Encode(test, innerArrOfH[:])
 	return "0x" + string(test)
+}
+
+func (h H512) ToEncodeObject() []byte {
+	return h.Bytes()
 }

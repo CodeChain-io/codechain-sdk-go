@@ -13,10 +13,10 @@ func TestBigNumber(t *testing.T) {
 		t.Fatal("bignumber creation Error")
 	}
 
-	if b.ToEncodeObject() != "0x05" {
+	if bytes.Compare(b.ToEncodeObject(), []byte{5}) != 0 {
 		t.Fatal("ToEncodeObject Error")
 	}
-	if c.ToEncodeObject() != uint(0) {
+	if bytes.Compare(c.ToEncodeObject(), []byte{}) != 0 {
 		t.Fatal("ToEncodeObject Error")
 	}
 }

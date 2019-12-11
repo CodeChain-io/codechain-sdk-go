@@ -62,7 +62,10 @@ func (h H128) Cmp(g H128) bool {
 }
 
 func (h H128) ToString() string {
-	return string(h[:])
+	var test = make([]byte, 32)
+	innerArrOfH := [16]byte(h)
+	hex.Encode(test, innerArrOfH[:])
+	return string(test)
 }
 
 func (h H128) ToHexString() string {
@@ -137,7 +140,10 @@ func (h H160) Cmp(g H160) bool {
 }
 
 func (h H160) ToString() string {
-	return string(h[:])
+	var test = make([]byte, 40)
+	innerArrOfH := [20]byte(h)
+	hex.Encode(test, innerArrOfH[:])
+	return string(test)
 }
 
 func (h H160) ToHexString() string {
@@ -203,7 +209,10 @@ func (h H256) Cmp(g H256) bool {
 }
 
 func (h H256) ToString() string {
-	return string(h[:])
+	var test = make([]byte, 64)
+	innerArrOfH := [32]byte(h)
+	hex.Encode(test, innerArrOfH[:])
+	return string(test)
 }
 
 func (h H256) ToHexString() string {
@@ -269,7 +278,10 @@ func (h H512) Cmp(g H512) bool {
 }
 
 func (h H512) ToString() string {
-	return string(h[:])
+	var test = make([]byte, 128)
+	innerArrOfH := [64]byte(h)
+	hex.Encode(test, innerArrOfH[:])
+	return string(test)
 }
 
 func (h H512) ToHexString() string {

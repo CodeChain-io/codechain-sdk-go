@@ -2,6 +2,7 @@ package primitives
 
 import (
 	"encoding/hex"
+	"errors"
 
 	"github.com/ethereum/go-ethereum/rlp"
 )
@@ -46,6 +47,15 @@ func (h H128) ToJSON() string {
 func NewH160Zero() H160 {
 	var zero H160 = [20]byte{}
 	return zero
+}
+
+func NewH160FromSlice(raw []byte) (h H160, err error) {
+	if len(raw) != 20 {
+		err = errors.New("Unexpected type casting to H160")
+		return
+	}
+	copy(h[:], raw)
+	return
 }
 
 func (h H160) Cmp(g H160) bool {

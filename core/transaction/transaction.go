@@ -1,8 +1,6 @@
 package transaction
 
 import (
-	"encoding/hex"
-
 	"github.com/CodeChain-io/codechain-rpc-go/crypto"
 	"github.com/CodeChain-io/codechain-rpc-go/primitives"
 )
@@ -20,16 +18,16 @@ type TransactionJSON struct {
 }
 
 type TransactionInterface interface {
-	Seq() int
+	Seq() uint
 	Fee() primitives.U64
-	SetSeq(int)
+	SetSeq(uint)
 	SetFee(primitives.U64)
 	NetworkID() string
-	ToEncodeObject() string
+	ToEncodeObject() []interface{}
 	RlpBytes() []byte
 	UnsignedHash() primitives.H256
-	Sign(primitives.H256, int, primitives.U64) interface{} // FIXME
-	ToJSON() string
+	Sign(primitives.H256, uint, primitives.U64) SignedTransaction
+	ToJSON() TransactionJSON
 	GetType() string
 	ActionToJSON() interface{}
 	ActionToEncodeObject() []interface{}
@@ -73,11 +71,13 @@ func (t transaction) UnsignedHash() primitives.H256 {
 	return primitives.H256(value) // byte
 }
 
-func (t transaction) Sign(secret primitives.H256, seq *int, fee *primitives.U64) SignedTransaction {
+func (t *transaction) Sign(secret primitives.H256, seq uint, fee primitives.U64) SignedTransaction {
 	// Handle error
-	sig := crypto.SignEcdsa([]byte(t.UnsignedHash().ToString()), []byte(secret.ToString()))
 
-	return NewSignedTransaction(t, hex.EncodeToString(sig), nil, nil, nil) // nil
+	sig := crypto.SignEcdsa(t.UnsignedHash().Bytes(), secret.Bytes())
+	t.SetSeq(seq)
+	t.SetFee(fee)
+	return NewSignedTransaction(t, sig, nil, nil, nil) // nil
 }
 
 func (t transaction) ToJSON() TransactionJSON {
@@ -89,5 +89,21 @@ func (t transaction) ToJSON() TransactionJSON {
 }
 
 func (t transaction) GetType() string {
-	return "Transaction"
+	return ""
+}
+
+func (t transaction) ActionToEncodeObject() []interface{} {
+	return nil
+}
+
+func (t transaction) ActionToJSON() interface{} {
+	return nil
+}
+
+func (t transaction) RlpBytes() []byte {
+	return nil
+}
+
+func (t transaction) ToEncodeObject() []interface{} {
+	return nil
 }

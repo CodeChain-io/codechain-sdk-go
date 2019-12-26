@@ -109,9 +109,16 @@ func (c *Chain) IsAssetSpent(tracker string, transactionIndex int, shardID int, 
 	return spent, err
 }
 
-func (c *Chain) GetSeq(address string, blockNumber int) (int, error) {
+func (c *Chain) GetLatestSeq(address string) (uint, error) {
 	const method = "chain_getSeq"
-	var seq int
+	var seq uint
+	err := c.rpcClient.call(callInterface{method: method, id: ""}, &seq, address)
+	return seq, err
+}
+
+func (c *Chain) GetSeq(address string, blockNumber int) (uint, error) {
+	const method = "chain_getSeq"
+	var seq uint
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &seq, address, blockNumber)
 	return seq, err
 }

@@ -30,6 +30,20 @@ func PlatformAddressFromPublic(publicKey H512, networkID string) (PlatformAddres
 	return PlatformAddressFromAccountID(accountID, networkID)
 }
 
+func PlatformAddressFromString(address string) (p PlatformAddress, err error) {
+	words := bech32Decode(address, address[0:3])
+	bytes := fromWords(words)
+	version := bytes[0]
+
+	if version != 1 {
+		err = errors.New("Unsupported version for PlatformAddress")
+	}
+
+	accountID := NewH160(bytes[1:])
+
+	return PlatformAddress{accountID, address}, nil
+}
+
 func GetAddcountIDFromPublic(publicKey string) H160 {
 	return blake160(publicKey)
 }

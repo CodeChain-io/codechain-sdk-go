@@ -5,8 +5,8 @@ import (
 	"encoding/hex"
 	"testing"
 
-	rpc "github.com/CodeChain-io/codechain-rpc-go"
 	"github.com/CodeChain-io/codechain-rpc-go/primitives"
+	"github.com/CodeChain-io/codechain-rpc-go/rpc"
 )
 
 func TestSigning(t *testing.T) {

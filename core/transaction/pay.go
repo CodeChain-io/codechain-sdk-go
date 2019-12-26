@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"github.com/CodeChain-io/codechain-rpc-go/crypto"
 	"github.com/CodeChain-io/codechain-rpc-go/primitives"
 	"github.com/ethereum/go-ethereum/rlp"
 )
@@ -36,7 +37,7 @@ func (p Pay) ToEncodeObject() []interface{} {
 	return []interface{}{byte(p.Seq()), p.Fee().ToEncodeObject(), p.NetworkID(), p.ActionToEncodeObject()}
 }
 
-func (p Pay) ActionToJSON() PayAction {
+func (p Pay) ActionToJSON() interface{} {
 	return PayAction{
 		p.Receiver.Value,
 		p.Quantity.ToJSON()}
@@ -45,4 +46,26 @@ func (p Pay) ActionToJSON() PayAction {
 func (p Pay) RlpBytes() []byte {
 	x, _ := rlp.EncodeToBytes(p.ToEncodeObject())
 	return x
+}
+
+func (p Pay) Hash() []byte {
+	x, _ := crypto.Blake256(p.RlpBytes())
+	return x
+}
+
+func (p Pay) UnsignedHash() primitives.H256 {
+	hash, _ := crypto.Blake256(p.RlpBytes())
+
+	var value [32]byte
+	copy(value[:], hash[:32])
+	return primitives.H256(value)
+}
+
+func (p *Pay) Sign(secret primitives.H256, seq uint, fee primitives.U64) SignedTransaction {
+	// Handle error
+	p.SetSeq(seq)
+	p.SetFee(fee)
+	sig := crypto.SignEcdsa(p.UnsignedHash().Bytes(), secret.Bytes())
+
+	return NewSignedTransaction(p, sig, nil, nil, nil)
 }

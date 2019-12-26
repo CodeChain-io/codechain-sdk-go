@@ -1,9 +1,11 @@
 package transaction
 
 import (
+	"encoding/hex"
+
 	"github.com/CodeChain-io/codechain-rpc-go/crypto"
 	"github.com/CodeChain-io/codechain-rpc-go/primitives"
-	// "github.com/ethereum/go-ethereum/rlp"
+	"github.com/ethereum/go-ethereum/rlp"
 )
 
 type SignedTransactionJSON struct {
@@ -15,34 +17,34 @@ type SignedTransactionJSON struct {
 }
 
 type SignedTransaction struct {
-	Unsigned         transaction
+	Unsigned         TransactionInterface
 	BlockNumber      *int
 	BlockHash        *primitives.H256
 	TransactionIndex *int
-	signature        string
+	signature        []byte
 }
 
 func NewSignedTransaction(
-	unsigned transaction,
-	signature string,
+	unsigned TransactionInterface,
+	signature []byte,
 	blockNumber *int,
 	blockHash *primitives.H256,
 	transactionIndex *int) SignedTransaction {
 	return SignedTransaction{unsigned, blockNumber, blockHash, transactionIndex, signature}
 }
 
-func (t SignedTransaction) Signature() string {
+func (t SignedTransaction) Signature() []byte {
 	return t.signature
 }
 
-/*func (t SignedTransaction) ToEncodeObject() []interface{} {
-	return []interface{}{t.Unsigned.ToEncodeObject(), t.Signature()}
-}*/
+func (t SignedTransaction) ToEncodeObject() []interface{} {
+	return append(t.Unsigned.ToEncodeObject(), t.Signature())
+}
 
-/*func (t SignedTransaction) RlpBytes() []byte {
+func (t SignedTransaction) RlpBytes() []byte {
 	x, _ := rlp.EncodeToBytes(t.ToEncodeObject())
 	return x
-}*/
+}
 
 func (t SignedTransaction) Hash() primitives.H256 {
 	hash, _ := crypto.Blake256([]byte{0}) //t.RlpBytes())
@@ -73,6 +75,6 @@ func (t SignedTransaction) ToJSON() SignedTransactionJSON {
 		*t.BlockNumber,
 		t.BlockHash.ToString(),
 		*t.TransactionIndex,
-		t.signature,
+		hex.EncodeToString(t.signature),
 		t.Hash().ToJSON()}
 }

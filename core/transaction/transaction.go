@@ -1,8 +1,8 @@
 package transaction
 
 import (
-	"github.com/CodeChain-io/codechain-rpc-go/crypto"
-	"github.com/CodeChain-io/codechain-rpc-go/primitives"
+	"github.com/CodeChain-io/codechain-sdk-go/crypto"
+	"github.com/CodeChain-io/codechain-sdk-go/primitives"
 )
 
 type ActionJSON struct {

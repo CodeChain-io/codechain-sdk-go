@@ -1,4 +1,4 @@
-module github.com/CodeChain-io/codechain-rpc-go
+module github.com/CodeChain-io/codechain-sdk-go
 
 go 1.12
 

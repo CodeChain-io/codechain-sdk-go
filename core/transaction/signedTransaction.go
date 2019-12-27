@@ -3,8 +3,8 @@ package transaction
 import (
 	"encoding/hex"
 
-	"github.com/CodeChain-io/codechain-rpc-go/crypto"
-	"github.com/CodeChain-io/codechain-rpc-go/primitives"
+	"github.com/CodeChain-io/codechain-sdk-go/crypto"
+	"github.com/CodeChain-io/codechain-sdk-go/primitives"
 	"github.com/ethereum/go-ethereum/rlp"
 )
 

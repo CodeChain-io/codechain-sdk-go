@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/CodeChain-io/codechain-rpc-go/crypto"
+	"github.com/CodeChain-io/codechain-sdk-go/crypto"
 )
 
 func TestEcdsa(t *testing.T) {

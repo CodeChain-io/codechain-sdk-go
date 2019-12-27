@@ -3,7 +3,7 @@ package transaction
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/CodeChain-io/codechain-rpc-go/primitives"
+	"github.com/CodeChain-io/codechain-sdk-go/primitives"
 	"testing"
 )
 

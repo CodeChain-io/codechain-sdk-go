@@ -5,7 +5,7 @@ A Golang SDK for CodeChain
 ## How to install
 
 ```bash
-go get -u github.com/CodeChain-io/codechain-rpc-go
+go get -u github.com/CodeChain-io/codechain-sdk-go
 ```
 
 ## Example
@@ -15,7 +15,7 @@ package main
 
 import (
 	"fmt"
-	rpc "github.com/CodeChain-io/codechain-rpc-go"
+	rpc "github.com/CodeChain-io/codechain-sdk-go"
 )
 func main() {
 	a := rpc.NewRPC("https://corgi-rpc.codechain.io/").Chain

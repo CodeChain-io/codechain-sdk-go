@@ -3,6 +3,7 @@ package primitives
 import (
 	"encoding/hex"
 	"errors"
+
 	"golang.org/x/crypto/blake2b"
 )
 

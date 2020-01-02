@@ -1,4 +1,4 @@
-package transaction
+package core
 
 import (
 	"github.com/CodeChain-io/codechain-sdk-go/crypto"
@@ -33,37 +33,37 @@ type TransactionInterface interface {
 	ActionToEncodeObject() []interface{}
 }
 
-type transaction struct {
+type Transaction struct {
 	seq       uint
 	fee       primitives.U64
 	networkID string
 }
 
-func newTransaction(networkID string) transaction {
-	return transaction{0, primitives.NewU64("0"), networkID}
+func NewTransaction(networkID string) Transaction {
+	return Transaction{0, primitives.NewU64("0"), networkID}
 }
 
-func (t transaction) Seq() uint {
+func (t Transaction) Seq() uint {
 	return t.seq
 }
 
-func (t transaction) Fee() primitives.U64 {
+func (t Transaction) Fee() primitives.U64 {
 	return t.fee
 }
 
-func (t *transaction) SetSeq(seq uint) {
+func (t *Transaction) SetSeq(seq uint) {
 	t.seq = seq
 }
 
-func (t *transaction) SetFee(fee primitives.U64) {
+func (t *Transaction) SetFee(fee primitives.U64) {
 	t.fee = fee
 }
 
-func (t transaction) NetworkID() string {
+func (t Transaction) NetworkID() string {
 	return t.networkID
 }
 
-func (t transaction) UnsignedHash() primitives.H256 {
+func (t Transaction) UnsignedHash() primitives.H256 {
 	hash, _ := crypto.Blake256([]byte{0}) //t.RlpBytes())
 
 	var value [32]byte
@@ -71,7 +71,7 @@ func (t transaction) UnsignedHash() primitives.H256 {
 	return primitives.H256(value) // byte
 }
 
-func (t *transaction) Sign(secret primitives.H256, seq uint, fee primitives.U64) SignedTransaction {
+func (t *Transaction) Sign(secret primitives.H256, seq uint, fee primitives.U64) SignedTransaction {
 	// Handle error
 
 	sig := crypto.SignEcdsa(t.UnsignedHash().Bytes(), secret.Bytes())
@@ -80,7 +80,7 @@ func (t *transaction) Sign(secret primitives.H256, seq uint, fee primitives.U64)
 	return NewSignedTransaction(t, sig, nil, nil, nil) // nil
 }
 
-func (t transaction) ToJSON() TransactionJSON {
+func (t Transaction) ToJSON() TransactionJSON {
 	return TransactionJSON{
 		t.GetType(), // assign action type.
 		t.networkID,
@@ -88,22 +88,22 @@ func (t transaction) ToJSON() TransactionJSON {
 		t.fee.ToJSON()}
 }
 
-func (t transaction) GetType() string {
+func (t Transaction) GetType() string {
 	return ""
 }
 
-func (t transaction) ActionToEncodeObject() []interface{} {
+func (t Transaction) ActionToEncodeObject() []interface{} {
 	return nil
 }
 
-func (t transaction) ActionToJSON() interface{} {
+func (t Transaction) ActionToJSON() interface{} {
 	return nil
 }
 
-func (t transaction) RlpBytes() []byte {
+func (t Transaction) RlpBytes() []byte {
 	return nil
 }
 
-func (t transaction) ToEncodeObject() []interface{} {
+func (t Transaction) ToEncodeObject() []interface{} {
 	return nil
 }

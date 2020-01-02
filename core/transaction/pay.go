@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"github.com/CodeChain-io/codechain-sdk-go/core"
 	"github.com/CodeChain-io/codechain-sdk-go/crypto"
 	"github.com/CodeChain-io/codechain-sdk-go/primitives"
 	"github.com/ethereum/go-ethereum/rlp"
@@ -12,7 +13,7 @@ type PayAction struct {
 }
 
 type Pay struct {
-	transaction
+	core.Transaction
 	Receiver primitives.PlatformAddress
 	Quantity primitives.U64
 }
@@ -21,7 +22,7 @@ func NewPay(receiver primitives.PlatformAddress,
 	quantity primitives.U64,
 	networkID string) Pay {
 
-	t := newTransaction(networkID)
+	t := core.NewTransaction(networkID)
 	return Pay{t, receiver, quantity}
 }
 
@@ -61,11 +62,11 @@ func (p Pay) UnsignedHash() primitives.H256 {
 	return primitives.H256(value)
 }
 
-func (p *Pay) Sign(secret primitives.H256, seq uint, fee primitives.U64) SignedTransaction {
+func (p *Pay) Sign(secret primitives.H256, seq uint, fee primitives.U64) core.SignedTransaction {
 	// Handle error
 	p.SetSeq(seq)
 	p.SetFee(fee)
 	sig := crypto.SignEcdsa(p.UnsignedHash().Bytes(), secret.Bytes())
 
-	return NewSignedTransaction(p, sig, nil, nil, nil)
+	return core.NewSignedTransaction(p, sig, nil, nil, nil)
 }

@@ -7,15 +7,31 @@ import (
 	"github.com/CodeChain-io/codechain-sdk-go/crypto"
 )
 
-func GenerateKey() ([]byte, error) {
+type EcdsaKey ecdsa.PrivateKey
+
+func GenerateEcdsa() (privateKey EcdsaKey, err error) {
 	privKey, err := ecdsa.GenerateKey(crypto.S256(), rand.Reader)
 	if err != nil {
-		return nil, err
+		return
 	}
+	return EcdsaKey(*privKey), nil
+}
 
+func (t EcdsaKey) GetPrivateKey() []byte {
 	rawPrivKey := make([]byte, 32)
-	blob := privKey.D.Bytes()
+	blob := t.D.Bytes()
 	copy(rawPrivKey[32-len(blob):], blob)
 
-	return rawPrivKey, nil
+	return rawPrivKey
+}
+
+func (t EcdsaKey) GetPublicKey() []byte {
+	blobX := t.PublicKey.X.Bytes()
+	blobY := t.PublicKey.Y.Bytes()
+
+	rawPubKey := make([]byte, 64)
+	copy(rawPubKey[32-len(blobX):], blobX)
+	copy(rawPubKey[64-len(blobY):], blobY)
+
+	return rawPubKey
 }

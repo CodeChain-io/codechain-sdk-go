@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 
 	"github.com/CodeChain-io/codechain-sdk-go/crypto"
+	"github.com/CodeChain-io/codechain-sdk-go/primitives"
 )
 
 type EcdsaKey ecdsa.PrivateKey
@@ -34,4 +35,38 @@ func (t EcdsaKey) GetPublicKey() []byte {
 	copy(rawPubKey[64-len(blobY):], blobY)
 
 	return rawPubKey
+}
+
+func (t EcdsaKey) CreateKey() (h primitives.H160, err error) {
+	hash, err := crypto.Blake160(t.GetPublicKey())
+	if err != nil {
+		return
+	}
+	return primitives.NewH160FromSlice(hash)
+}
+
+func CreateAssetAddress(networkID string) (a primitives.AssetAddress, err error) {
+	key, err := GenerateEcdsa()
+	if err != nil {
+		return
+	}
+	hash, err := key.CreateKey()
+	if err != nil {
+		return
+	}
+	return primitives.AssetAddressFromTypeAndPayload(byte(1), hash, networkID)
+}
+
+func CreatePlatformAddress(networkID string) (a primitives.PlatformAddress, secret []byte, err error) {
+	key, err := GenerateEcdsa()
+	if err != nil {
+		return
+	}
+	hash, err := key.CreateKey()
+	if err != nil {
+		return
+	}
+
+	add, err := primitives.PlatformAddressFromAccountID(hash, networkID)
+	return add, key.GetPrivateKey(), err
 }

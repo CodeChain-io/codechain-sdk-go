@@ -22,6 +22,16 @@ func NewU64(v string) U64 {
 	return U64(x)
 }
 
+func NewU64WithHex(v string) U64 {
+	var x big.Int
+	if v[0:2] == "0x" {
+		x.SetString(v[2:], 16)
+	} else {
+		x.SetString(v, 16)
+	}
+	return U64(x)
+}
+
 func (u *U64) set(y big.Int) {
 	*u = U64(y)
 }

@@ -74,7 +74,6 @@ func (t MintAsset) GetMintedAsset() core.Asset {
 		t.Output.LockScriptHash,
 		parameters,
 		t.Output.Supply,
-		t.GetMintedAsset().OutPoint,
 		t.Tracker(),
 		uint(0))
 }

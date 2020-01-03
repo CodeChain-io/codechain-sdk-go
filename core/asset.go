@@ -30,7 +30,6 @@ func NewAsset(assetType primitives.H160,
 	lockScriptHash primitives.H160,
 	parameters []string,
 	quantity primitives.U64,
-	outPoint AssetOutPoint,
 	tracker primitives.H256,
 	transactionOutputIndex uint) Asset {
 

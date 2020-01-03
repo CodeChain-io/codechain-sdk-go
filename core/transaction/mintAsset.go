@@ -51,7 +51,7 @@ func NewMintAsset(networkID string,
 }
 
 func (t MintAsset) Tracker() primitives.H256 {
-	hash, _ := crypto.Blake256(t.Transaction.RlpBytes())
+	hash, _ := crypto.Blake256(t.ActionRlpBytes())
 	return primitives.NewH256(hash)
 }
 
@@ -93,10 +93,10 @@ func (t MintAsset) GetType() string {
 }
 
 func (t MintAsset) ActionToEncodeObject() []interface{} {
-	parameters := make([][]byte, len(t.AllowedScriptHashes))
+	allowedScriptHashes := make([][]byte, len(t.AllowedScriptHashes))
 	for i, d := range t.AllowedScriptHashes {
 		res := d.ToEncodeObject()
-		parameters[i] = res
+		allowedScriptHashes[i] = res
 	}
 
 	var approver []interface{}
@@ -119,8 +119,7 @@ func (t MintAsset) ActionToEncodeObject() []interface{} {
 		t.Output.Supply.ToEncodeObject(),
 		approver,
 		registrar,
-		parameters,
-		t.Approvals}
+		allowedScriptHashes}
 }
 
 func (t MintAsset) ActionToJSON() interface{} {
@@ -136,7 +135,7 @@ func (t *MintAsset) Sign(secret primitives.H256, seq uint, fee primitives.U64) c
 }
 
 func (t MintAsset) ToEncodeObject() []interface{} {
-	return []interface{}{byte(t.Seq()), t.Fee().ToEncodeObject(), t.NetworkID(), t.ActionToEncodeObject()}
+	return []interface{}{byte(t.Seq()), t.Fee().ToEncodeObject(), t.NetworkID(), append(t.ActionToEncodeObject(), t.Approvals)}
 }
 
 func (t MintAsset) UnsignedHash() primitives.H256 {
@@ -146,5 +145,10 @@ func (t MintAsset) UnsignedHash() primitives.H256 {
 
 func (t MintAsset) RlpBytes() []byte {
 	x, _ := rlp.EncodeToBytes(t.ToEncodeObject())
+	return x
+}
+
+func (t MintAsset) ActionRlpBytes() []byte {
+	x, _ := rlp.EncodeToBytes(t.ActionToEncodeObject())
 	return x
 }

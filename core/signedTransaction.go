@@ -38,6 +38,7 @@ func (t SignedTransaction) Signature() []byte {
 }
 
 func (t SignedTransaction) ToEncodeObject() []interface{} {
+	// FIXME return error when seq, fee are not set.
 	return append(t.Unsigned.ToEncodeObject(), t.Signature())
 }
 

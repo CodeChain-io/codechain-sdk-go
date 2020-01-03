@@ -88,7 +88,14 @@ func (c *Chain) GetAssetSchemeByType(assetType string) (AssetScheme, error) {
 	return assetScheme, err
 }
 
-func (c *Chain) GetAsset(tracker string, transactionIndex int, shardID int, blockNumber int) (Asset, error) {
+func (c *Chain) GetAsset(tracker string, transactionIndex int, shardID int) (Asset, error) {
+	const method = "chain_getAsset"
+	var asset Asset
+	err := c.rpcClient.call(callInterface{method: method, id: ""}, &asset, tracker, transactionIndex, shardID)
+	return asset, err
+}
+
+func (c *Chain) GetAssetWithBlockNumber(tracker string, transactionIndex int, shardID int, blockNumber int) (Asset, error) {
 	const method = "chain_getAsset"
 	var asset Asset
 	err := c.rpcClient.call(callInterface{method: method, id: ""}, &asset, tracker, transactionIndex, shardID, blockNumber)

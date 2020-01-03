@@ -20,13 +20,10 @@ type TransactionJSON struct {
 type TransactionInterface interface {
 	Seq() uint
 	Fee() primitives.U64
-	SetSeq(uint)
-	SetFee(primitives.U64)
 	NetworkID() string
 	ToEncodeObject() []interface{}
 	RlpBytes() []byte
 	UnsignedHash() primitives.H256
-	Sign(primitives.H256, uint, primitives.U64) SignedTransaction
 	ToJSON() TransactionJSON
 	GetType() string
 	ActionToJSON() interface{}

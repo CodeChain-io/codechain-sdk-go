@@ -8,7 +8,12 @@ type UnsignedTransaction struct {
 }
 
 type AssetScheme interface{}
-type Asset interface{}
+type Asset struct {
+	AssetType      string   `json:"assetType"`
+	LockScriptHash string   `json:"lockScriptHash"`
+	Parameters     []string `json:"parameters"`
+	Quantity       string   `json:"quantity"`
+}
 type CommonParams interface{}
 
 type Text struct {

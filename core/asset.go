@@ -66,6 +66,10 @@ func (a Asset) ToJSON() AssetJSON {
 		a.OutPoint.Index}
 }
 
-// Asset.createTransferInput
+func (a Asset) CreateTransferInput() AssetTransferInput {
+	return NewAssetTransferInput(a.OutPoint, nil, nil, nil)
+}
 
-// Asset.createTransferTransaction
+func (a Asset) CreateTransferInputWithTimelock(timelock Timelock) AssetTransferInput {
+	return NewAssetTransferInput(a.OutPoint, &timelock, nil, nil)
+}

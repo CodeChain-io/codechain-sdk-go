@@ -134,7 +134,7 @@ func (t *MintAsset) Sign(secret primitives.H256, seq uint, fee primitives.U64) c
 }
 
 func (t MintAsset) ToEncodeObject() []interface{} {
-	return []interface{}{byte(t.Seq()), t.Fee().ToEncodeObject(), t.NetworkID(), append(t.ActionToEncodeObject(), t.Approvals)}
+	return []interface{}{t.Seq(), t.Fee().ToEncodeObject(), t.NetworkID(), append(t.ActionToEncodeObject(), t.Approvals)}
 }
 
 func (t MintAsset) UnsignedHash() primitives.H256 {

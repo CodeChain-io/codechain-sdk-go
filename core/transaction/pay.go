@@ -35,7 +35,7 @@ func (p Pay) ActionToEncodeObject() []interface{} {
 }
 
 func (p Pay) ToEncodeObject() []interface{} {
-	return []interface{}{byte(p.Seq()), p.Fee().ToEncodeObject(), p.NetworkID(), p.ActionToEncodeObject()}
+	return []interface{}{p.Seq(), p.Fee().ToEncodeObject(), p.NetworkID(), p.ActionToEncodeObject()}
 }
 
 func (p Pay) ActionToJSON() interface{} {

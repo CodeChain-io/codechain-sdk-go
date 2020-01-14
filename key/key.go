@@ -45,11 +45,7 @@ func (t EcdsaKey) CreateKey() (h primitives.H160, err error) {
 	return primitives.NewH160FromSlice(hash)
 }
 
-func CreateAssetAddress(networkID string) (a primitives.AssetAddress, err error) {
-	key, err := GenerateEcdsa()
-	if err != nil {
-		return
-	}
+func CreateAssetAddress(key EcdsaKey, networkID string) (a primitives.AssetAddress, err error) {
 	hash, err := key.CreateKey()
 	if err != nil {
 		return
@@ -57,16 +53,11 @@ func CreateAssetAddress(networkID string) (a primitives.AssetAddress, err error)
 	return primitives.AssetAddressFromTypeAndPayload(byte(1), hash, networkID)
 }
 
-func CreatePlatformAddress(networkID string) (a primitives.PlatformAddress, secret []byte, err error) {
-	key, err := GenerateEcdsa()
-	if err != nil {
-		return
-	}
+func CreatePlatformAddress(key EcdsaKey, networkID string) (a primitives.PlatformAddress, err error) {
 	hash, err := key.CreateKey()
 	if err != nil {
 		return
 	}
 
-	add, err := primitives.PlatformAddressFromAccountID(hash, networkID)
-	return add, key.GetPrivateKey(), err
+	return primitives.PlatformAddressFromAccountID(hash, networkID)
 }

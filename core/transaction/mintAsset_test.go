@@ -20,7 +20,8 @@ func TestMint(t *testing.T) {
 
 	seq, _ := rpcClient.Chain.GetLatestSeq(accountID.Value)
 
-	asset, _ := key.CreateAssetAddress("wc")
+	ecdsa, _ := key.GenerateEcdsa()
+	asset, _ := key.CreateAssetAddress(ecdsa, "wc")
 	output, _ := core.NewAssetMintOutputWithRecipient(asset, primitives.NewU64("4422333"))
 	mint := NewMintAsset("wc", uint(0), "asdfasdf", output, nil, nil, []primitives.H160{}, []string{})
 

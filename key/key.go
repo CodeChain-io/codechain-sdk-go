@@ -3,6 +3,8 @@ package key
 import (
 	"crypto/ecdsa"
 	"crypto/rand"
+	"errors"
+	"math/big"
 
 	"github.com/CodeChain-io/codechain-sdk-go/crypto"
 	"github.com/CodeChain-io/codechain-sdk-go/primitives"
@@ -60,4 +62,18 @@ func CreatePlatformAddress(key EcdsaKey, networkID string) (a primitives.Platfor
 	}
 
 	return primitives.PlatformAddressFromAccountID(hash, networkID)
+}
+
+func ToECDSA(privateKey []byte) (*EcdsaKey, error) {
+	priv := new(EcdsaKey)
+	priv.PublicKey.Curve = crypto.S256()
+	priv.D = new(big.Int).SetBytes(privateKey)
+
+	priv.PublicKey.X, priv.PublicKey.Y = priv.PublicKey.Curve.ScalarBaseMult(privateKey)
+
+	if priv.PublicKey.X == nil {
+		return nil, errors.New("Invalid private key")
+	}
+
+	return priv, nil
 }

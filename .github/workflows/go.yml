@@ -23,7 +23,7 @@ jobs:
           fi
 
       - name: Build
-        run: go build -v .
+        run: go build -v ./...
       - name: Run Revive Action by building from repository
         uses: morphy2k/revive-action@v1
         with:

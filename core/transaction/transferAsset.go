@@ -252,7 +252,7 @@ func (t *TransferAsset) SignTransactionInput(index int, pubkey []byte, privkey [
 	parameter := hex.EncodeToString(parameters[0])
 	pubkeyhsh, _ := crypto.Blake160(pubkey)
 	if parameter != hex.EncodeToString(pubkeyhsh) {
-		return errors.New("Wrong Publick Key")
+		return errors.New("Wrong Public Key")
 	}
 
 	scriptOpcode := key.GetP2PKHLockScript()

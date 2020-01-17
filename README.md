@@ -23,7 +23,7 @@ package main
 
 import (
 	"fmt"
-	rpc "github.com/CodeChain-io/codechain-sdk-go"
+	"github.com/CodeChain-io/codechain-sdk-go/rpc"
 )
 func main() {
 	a := rpc.NewRPC("https://corgi-rpc.codechain.io/").Chain

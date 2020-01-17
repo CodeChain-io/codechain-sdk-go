@@ -10,6 +10,14 @@ go get -u github.com/CodeChain-io/codechain-sdk-go
 
 ## Example
 
+**Check for** [examples folder](https://github.com/CodeChain-io/codechain-sdk-go/tree/master/example)
+
+Examples works under CodeChain in local with [test configuration](https://github.com/CodeChain-io/codechain#run).
+
+```sh
+go run ./example/pay/main.go
+```
+
 ```Go
 package main
 

@@ -24,10 +24,3 @@ jobs:
 
       - name: Build
         run: go build -v ./...
-      - name: Run Revive Action by building from repository
-        uses: morphy2k/revive-action@v1
-        with:
-          config: ./revive.toml
-        env:
-          # GitHub token for annotations (optional)
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
